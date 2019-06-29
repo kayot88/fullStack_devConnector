@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
-// const authController = require('../controllers/authController');
+// const authLoginController = require('../controllers/authController');
 const { check, validationResult } = require('express-validator/check');
 /* Passport Local Authentication */
 
