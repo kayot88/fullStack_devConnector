@@ -1,15 +1,16 @@
 const router = require('express').Router();
+const Posts = require('../models/Posts');
+
 const {
   addPost,
   getAllPosts,
   getPostById,
-  deletePost
+  deletePost,
+  likePost,
+  unLikePost
 } = require('../controllers/postController');
 const { check, validationResult } = require('express-validator/check');
 const auth = require('../middleware/auth');
-const Posts = require('../models/Posts');
-const User = require('../models/User');
-const Profile = require('../models/Profile');
 
 //route POST create post
 router.post(
@@ -34,3 +35,9 @@ router.get('/:id', auth, getPostById);
 //delete post
 router.delete('/:id', auth, deletePost);
 module.exports = router;
+
+//like post
+router.put('/like/:id', auth, likePost);
+
+//unlike post
+router.put('/unlike/:id', auth, unLikePost);
