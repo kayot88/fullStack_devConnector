@@ -7,7 +7,10 @@ const {
   getPostById,
   deletePost,
   likePost,
-  unLikePost
+  unLikePost,
+  addComment,
+  deleteComment
+
 } = require('../controllers/postController');
 const { check, validationResult } = require('express-validator/check');
 const auth = require('../middleware/auth');
@@ -41,3 +44,20 @@ router.put('/like/:id', auth, likePost);
 
 //unlike post
 router.put('/unlike/:id', auth, unLikePost);
+
+//add coment
+router.put(
+  '/comments/:id',
+  [
+    auth,
+    [
+      check('text', 'text is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  addComment
+);
+
+// remove comment
+router.delete('/comments/:id/:comment_id', auth, deleteComment);

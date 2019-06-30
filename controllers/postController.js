@@ -130,3 +130,58 @@ exports.unLikePost = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+exports.addComment = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const post = await Posts.findById(req.params.id);
+    const user = await User.findById({ _id: req.user.id }).select('-password');
+    const { text } = req.body;
+    const newComment = {
+      text,
+      name: user.id,
+      avatar: user.avatar
+    };
+    post.comments.unshift(newComment);
+    await post.save();
+    res.json(post.comments);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  try {
+    const post = await Posts.findById(req.params.id);
+    const comment = post.comments.find(
+      comment => comment.id === req.params.comment_id
+    );
+    if (!comment) {
+      return res.status(400).json({ msg: 'comment not found' });
+    }
+    if (
+      post.comments.filter(comment => comment.name.toString() === req.user.id)
+        .length === 0
+    ) {
+      return res.json({ msg: 'you not a owner' });
+    }
+    const commentIndex = post.comments
+      .map(comment => {
+        return comment.id;
+      })
+      .indexOf(comment.id);
+
+    post.comments.splice(commentIndex, 1);
+    await post.save();
+    res.json(post.comments);
+  } catch (error) {
+    console.error(error.message);
+        // res.json(post.comments);
+
+    res.status(500).send('Server error');
+  }
+};
