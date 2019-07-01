@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "gromov",
   "license": "ISC",
@@ -21,10 +23,12 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.19.1"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
