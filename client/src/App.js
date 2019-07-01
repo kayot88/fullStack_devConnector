@@ -8,6 +8,7 @@ import LandSection from './containers/Landing/Landing';
 import PagesSection from './components/PagesSection';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Alert from './containers/Alert';
 import './App.css';
 import store from './store';
 
@@ -19,6 +20,7 @@ const App = () => (
           <Navbar />
           <Route exact path="/" component={LandSection} />
           <PagesSection className="container">
+            <Alert />
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
