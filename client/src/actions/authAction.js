@@ -1,8 +1,11 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, SET_ALERT } from '../constants/types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, FETCH_REGISTER } from '../constants/types';
 import alertActions from '../actions/alertActions';
 import axios from 'axios';
 
 const registerAction = ({ name, email, password }) => async dispatch => {
+  dispatch({
+    type: FETCH_REGISTER
+  });
   try {
     const newUser = {
       name,
@@ -16,7 +19,6 @@ const registerAction = ({ name, email, password }) => async dispatch => {
     };
     const body = JSON.stringify(newUser);
     const res = await axios.post('/api/users/register', body, config);
-    console.log(res.data);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -24,7 +26,7 @@ const registerAction = ({ name, email, password }) => async dispatch => {
     });
   } catch (error) {
     const { errors } = error.response.data;
-    errors.forEach(error => dispatch(alertActions(error.msg, 'danger')));
+    errors.map(error => dispatch(alertActions(error.msg, 'danger')));
 
     dispatch({
       type: REGISTER_FAIL
