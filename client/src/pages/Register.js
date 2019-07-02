@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import Alert from '../containers/Alert';
 
 import addAlert from '../actions/alertActions';
+import registerAction from '../actions/authAction';
 
-import axios from 'axios';
+// import axios from 'axios';
 
-const Register = ({ addAlert }) => {
+const Register = ({ addAlert, registerAction }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,7 +17,7 @@ const Register = ({ addAlert }) => {
     password2: ''
   });
   const { name, email, password, password2 } = formData;
-
+  
   const handleOnChange = e => {
     return setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,6 +27,7 @@ const Register = ({ addAlert }) => {
       return addAlert('password do not match', 'danger');
     }
     console.log(formData);
+    registerAction({name, email, password});
   };
   return (
     <Fragment>
@@ -41,7 +43,7 @@ const Register = ({ addAlert }) => {
             name="name"
             value={name}
             onChange={handleOnChange}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -51,7 +53,7 @@ const Register = ({ addAlert }) => {
             name="email"
             value={email}
             onChange={handleOnChange}
-            required
+            // required
           />
           <small className="form-text">
             This site uses Gravatar so if you want a profile image, use a
@@ -66,7 +68,7 @@ const Register = ({ addAlert }) => {
             value={password}
             onChange={handleOnChange}
             minLength="6"
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -77,7 +79,7 @@ const Register = ({ addAlert }) => {
             minLength="6"
             value={password2}
             onChange={handleOnChange}
-            required
+            // required
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
@@ -95,5 +97,5 @@ Register.propTypes = {
 
 export default connect(
   null,
-  { addAlert }
+  { addAlert, registerAction }
 )(Register);

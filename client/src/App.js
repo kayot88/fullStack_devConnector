@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
+import rootReducer from './reducers';
 import theme from './theme';
 import Navbar from './containers/Navbar/Navbar';
 import LandSection from './containers/Landing/Landing';
@@ -31,5 +32,4 @@ const App = () => (
     </Provider>
   </BrowserRouter>
 );
-
 export default App;

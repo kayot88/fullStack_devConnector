@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
-const connectDB = require('./config/db');
 require('dotenv').config({ path: '.env' });
+// const cors = require('cors');
+const connectDB = require('./config/db');
 
 //connect DB
 connectDB();
@@ -14,6 +15,7 @@ app.use(express.json({extends: false})) //like bodyParser (from box)
 // const passport = require('passport');
 // passport.use(Strategy);
 // define routes
+// app.use(cors());
 app.use('/api/users', require('./routes/users'));
 app.use('/api/posts', require('./routes/posts'));
 app.use('/api/profile', require('./routes/profile'));

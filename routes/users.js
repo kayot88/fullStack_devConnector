@@ -17,8 +17,4 @@ router.post(
   userController
 );
 
-
-
-
-
 module.exports = router;

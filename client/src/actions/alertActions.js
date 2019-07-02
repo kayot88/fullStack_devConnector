@@ -12,7 +12,7 @@ const addAlert = (msg, alertType) => dispatch => {
       type: REMOVE_ALERT,
       payload: id
     });
-  }, 2000);
+  }, 5000);
 };
 
 export default addAlert
