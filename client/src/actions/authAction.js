@@ -2,12 +2,12 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   FETCH_REGISTER,
-  FETCH_USER,
   USER_LOADED,
   AUTH_ERROR,
   FETCH_LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  LOGOUT
 } from '../constants/types';
 import { setHeaderToken } from '../utils/setHeaderToken';
 import alertActions from '../actions/alertActions';
@@ -68,6 +68,7 @@ export const registerAction = ({ name, email, password }) => async dispatch => {
       type: REGISTER_SUCCESS,
       payload: res.data
     });
+    dispatch(authUser());
   } catch (error) {
     const { errors } = error.response.data;
     errors.map(error => dispatch(alertActions(error.msg, 'danger')));
@@ -100,14 +101,23 @@ export const loginAction = ({ email, password }) => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: res.data
     });
+    dispatch(authUser());
   } catch (error) {
+    console.log(error);
     const { errors } = error.response.data;
-    console.log(errors);
+    // console.log(errors.response.data);
+    // dispatch(alertActions(error.msg, 'danger'))
     errors.map(error => dispatch(alertActions(error.msg, 'danger')));
 
     dispatch({
-      type: LOGIN_FAIL,
-      payload: errors
+      type: LOGIN_FAIL
+      // payload: error
     });
   }
+};
+
+export const logoutUser = () => dispatch => {
+  dispatch({
+    type: LOGOUT
+  });
 };

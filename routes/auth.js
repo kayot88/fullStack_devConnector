@@ -37,7 +37,8 @@ router.post(
       if (!user) {
         return res.status(400).json({ errors: [{ msg: 'No user found' }] });
       }
-      const isMatch = user.isValidPassword(password);
+      const isMatch = await user.isValidPassword(password);
+      console.log(isMatch);
       if (!isMatch) {
         return res
           .status(400)

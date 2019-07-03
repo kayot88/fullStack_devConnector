@@ -4,28 +4,27 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  name:{
-    type: String, 
-    required: true,
+  name: {
+    type: String,
+    required: true
   },
-  email:{
-    type: String, 
+  email: {
+    type: String,
     required: true,
     unique: true
   },
-  password:{
-    type: String, 
+  password: {
+    type: String,
     required: true
   },
-  avatar:{
-    type: String, 
+  avatar: {
+    type: String
   },
-  date:{
-    type: Date, 
+  date: {
+    type: Date,
     dafault: Date.now
   }
-})
-
+});
 
 UserSchema.pre('save', async function(next) {
   const user = this;
@@ -36,8 +35,8 @@ UserSchema.pre('save', async function(next) {
 
 UserSchema.methods.isValidPassword = async function(password) {
   const user = this;
-  const compare = await bcrypt.compare(password, user.password);
-  return compare;
+  const isMatch = await bcrypt.compare(password, user.password);
+  return isMatch;
 };
 
-module.exports = mongoose.model('user', UserSchema)
+module.exports = mongoose.model('user', UserSchema);

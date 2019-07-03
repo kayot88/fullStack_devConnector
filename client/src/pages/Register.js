@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../containers/Spinner';
-import authReducer from '../reducers/authReducer';
+// import authReducer from '../reducers/authReducer';
 import addAlert from '../actions/alertActions';
 import { registerAction } from '../actions/authAction';
 
-const Register = ({ addAlert, registerAction, loading }) => {
+const Register = ({ addAlert, registerAction, loading, isAuthorized }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,6 +27,9 @@ const Register = ({ addAlert, registerAction, loading }) => {
     console.log(formData);
     registerAction({ name, email, password });
   };
+  if (isAuthorized) {
+    return <Redirect to="/dashboard"/>;
+  }
   if (loading) {
     return <Spinner className="spinner" />;
   }
@@ -94,12 +97,15 @@ const Register = ({ addAlert, registerAction, loading }) => {
 
 Register.propTypes = {
   addAlert: PropTypes.func.isRequired,
-  registerAction: PropTypes.func.isRequired
+  registerAction: PropTypes.func.isRequired,
+  isAuthorized: PropTypes.bool,
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    isAuthorized: state.auth.isAuthorized
   };
 };
 
