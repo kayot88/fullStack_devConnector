@@ -1,11 +1,14 @@
 import React, { Fragment, useState } from 'react';
-import {Link} from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Spinner from '../containers/Spinner';
 
-const Login = () => {
+import { loginAction } from '../actions/authAction';
+
+const Login = ({ loginAction, loading }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    password: ''
   });
   const { email, password } = formData;
 
@@ -14,8 +17,11 @@ const Login = () => {
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
+    loginAction({ email, password });
   };
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <Fragment>
       <h1 className="large text-primary">Sign In</h1>
@@ -53,4 +59,11 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  loading: state.auth.loading
+})
+
+export default connect(
+  mapStateToProps,
+  { loginAction }
+)(Login);

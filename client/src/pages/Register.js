@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../containers/Spinner';
-// import Alert from '../containers/Alert';
 import authReducer from '../reducers/authReducer';
 import addAlert from '../actions/alertActions';
-import registerAction from '../actions/authAction';
-
-// import axios from 'axios';
+import { registerAction } from '../actions/authAction';
 
 const Register = ({ addAlert, registerAction, loading }) => {
   const [formData, setFormData] = useState({
@@ -31,7 +28,7 @@ const Register = ({ addAlert, registerAction, loading }) => {
     registerAction({ name, email, password });
   };
   if (loading) {
-    return <Spinner />;
+    return <Spinner className="spinner" />;
   }
   return (
     <Fragment>
