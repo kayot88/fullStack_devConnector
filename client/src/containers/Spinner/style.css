@@ -84,6 +84,13 @@
     opacity: 1;
   }
 }
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .lds-pacman {
   position: relative;
 }

@@ -1,8 +1,12 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { PropTypes } from 'prop-types';
 import StyledSection from '../../components/LandSection';
 import DarkOverlay from '../../components/Dark-overlay';
+import { profileActions } from '../../actions/profileAction';
+import Spinner from '../Spinner';
 
 const LandingInner = styled.div`
   display: flex;
@@ -17,6 +21,7 @@ const LandingInner = styled.div`
 `;
 
 const Landing = () => {
+  
   return (
     <StyledSection className="nav">
       <DarkOverlay>
@@ -39,5 +44,6 @@ const Landing = () => {
     </StyledSection>
   );
 };
+
 
 export default Landing;

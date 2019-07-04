@@ -7,7 +7,8 @@ import {
   FETCH_LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  CLEAR_PROFILE
 } from '../constants/types';
 import { setHeaderToken } from '../utils/setHeaderToken';
 import alertActions from '../actions/alertActions';
@@ -119,5 +120,8 @@ export const loginAction = ({ email, password }) => async dispatch => {
 export const logoutUser = () => dispatch => {
   dispatch({
     type: LOGOUT
+  });
+  dispatch({
+    type: CLEAR_PROFILE
   });
 };

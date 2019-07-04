@@ -8,6 +8,8 @@ import LandSection from './containers/Landing/Landing';
 import PagesSection from './components/PagesSection';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import PrivateRoute from './containers/PrivateRoute';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Alert from './containers/Alert';
 import './App.css';
 import store from './store';
@@ -29,6 +31,11 @@ const App = () => {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <PrivateRoute
+                  exact
+                  path="/dashboard"
+                  component={Dashboard}
+                />
               </Switch>
             </PagesSection>
           </Fragment>
@@ -37,5 +44,5 @@ const App = () => {
     </BrowserRouter>
   );
 };
-
+;
 export default App;

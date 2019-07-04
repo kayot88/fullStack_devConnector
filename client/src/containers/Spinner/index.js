@@ -1,18 +1,20 @@
 import React from 'react';
-import './style.css'
+import './style.css';
 
 const Spinner = () => {
   return (
-    <div className="lds-css ng-scope">
-      <div className="lds-pacman">
-        <div>
-          <div />
-          <div />
-          <div />
-        </div>
-        <div>
-          <div />
-          <div />
+    <div className="wrapper">
+      <div className="lds-css ng-scope">
+        <div className="lds-pacman">
+          <div>
+            <div />
+            <div />
+            <div />
+          </div>
+          <div>
+            <div />
+            <div />
+          </div>
         </div>
       </div>
     </div>
