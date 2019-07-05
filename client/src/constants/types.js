@@ -14,3 +14,4 @@ export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const FETCH_PROFILE = 'FETCH_PROFILE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
+export const CREATE_PROFILE = 'CREATE_PROFILE';

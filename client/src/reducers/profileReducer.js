@@ -2,7 +2,8 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   FETCH_PROFILE,
-  CLEAR_PROFILE
+  CLEAR_PROFILE,
+  CREATE_PROFILE
 } from '../constants/types';
 
 const initialState = {
@@ -19,6 +20,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         profile: null,
+        repos: [],
+        loading: false
+      };
+    case CREATE_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
         repos: [],
         loading: false
       };

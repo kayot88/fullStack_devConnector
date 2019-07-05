@@ -9,7 +9,6 @@ exports.createProfileUpdate = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
   const {
     company,
     website,
@@ -46,7 +45,7 @@ exports.createProfileUpdate = async (req, res) => {
   try {
     // const id = req.user.id;
     let profile = await Profile.findOne({ user: req.user.id });
-    console.log(profile);
+    // console.log(profile);
     if (profile) {
       //update profile
       profile = await Profile.findOneAndUpdate(

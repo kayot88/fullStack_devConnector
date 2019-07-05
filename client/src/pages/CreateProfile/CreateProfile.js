@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import { connect } from 'redux';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createProfileUpdate } from '../../actions/profileAction';
 import PagesSection from '../../components/PagesSection';
 
-const CreateProfile = props => {
+const CreateProfile = ({ createProfileUpdate, history }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -36,7 +38,10 @@ const CreateProfile = props => {
   const onChange = e => {
     return setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // console.log(formData);
+  const handleSubmit = e => {
+    e.preventDefault();
+    createProfileUpdate(formData, history);
+  };
   return (
     <Fragment>
       <PagesSection>
@@ -46,7 +51,7 @@ const CreateProfile = props => {
           profile stand out
         </p>
         <small>* = required field</small>
-        <form className="form">
+        <form className="form" onSubmit={e => handleSubmit(e)}>
           <div className="form-group">
             <select
               name="status"
@@ -232,16 +237,23 @@ const CreateProfile = props => {
               </div>
             </Fragment>
           ) : null}
-          <input type="submit" className="btn btn-primary my-1" />
-          <a className="btn btn-light my-1" href="dashboard.html">
+
+          <input type="submit" className="btn btn-primary my-1"/>
+           
+          <Link className="btn btn-light my-1" to="/dashboard">
             Go Back
-          </a>
+          </Link>
         </form>
       </PagesSection>
     </Fragment>
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  createProfileUpdate: PropTypes.func.isRequired
+};
 
-export default CreateProfile;
+export default connect(
+  null,
+  { createProfileUpdate }
+)(withRouter(CreateProfile));
