@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoute from './containers/PrivateRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
+import CreateProfile from './pages/CreateProfile/CreateProfile';
 import Alert from './containers/Alert';
 import './App.css';
 import store from './store';
@@ -35,6 +36,11 @@ const App = () => {
                   exact
                   path="/dashboard"
                   component={Dashboard}
+                />
+                <PrivateRoute
+                  exact
+                  path="/create-profile"
+                  component={CreateProfile}
                 />
               </Switch>
             </PagesSection>
