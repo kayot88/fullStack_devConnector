@@ -36,7 +36,7 @@ export const authUser = () => async dispatch => {
       payload: user
     });
 
-    console.log(res.data);
+    // console.log(res.data);
   } catch (error) {
     console.error(error.response.data);
     dispatch(alertActions(error.response.data.msg, 'danger'));

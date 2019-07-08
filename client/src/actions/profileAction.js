@@ -3,11 +3,47 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   FETCH_PROFILE,
-  CREATE_PROFILE
-  // CLEAR_PROFILE
+  CREATE_PROFILE,
+  CLEAR_PROFILE,
+  UPDATE_PROFILE
 } from '../constants/types';
 import { setHeaderToken } from '../utils/setHeaderToken';
 import alertActions from '../actions/alertActions';
+
+export const addExperience = (formData, history) => async dispatch => {
+  dispatch({
+    type: FETCH_PROFILE
+  });
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.put(
+      '/api/profile/experience',
+      formData,
+      config
+    );
+    console.log(res);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+    if (res.data) {
+      dispatch(alertActions('experiences added', 'success'));
+      history.push('/dashboard');
+    }
+  } catch (error) {
+    const { errors } = error.response.data;
+    errors.map(error => dispatch(alertActions(error.msg, 'danger')));
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+
 
 export const profileActions = () => async dispatch => {
   dispatch({
@@ -21,7 +57,7 @@ export const profileActions = () => async dispatch => {
 
   try {
     const res = await axios.get('/api/profile/me');
-    console.log(res);
+    // console.log(res);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
@@ -52,11 +88,13 @@ export const createProfileUpdate = (
       payload: res.data
     });
 
-    dispatch(alertActions(edit ? 'Profile updated' : 'Profile created', 'success'));
+    dispatch(
+      alertActions(edit ? 'Profile updated' : 'Profile created', 'success')
+    );
 
     if (!edit) {
       history.push('/dashboard');
-    } 
+    }
   } catch (error) {
     const { errors } = error.response.data;
     errors.map(error => dispatch(alertActions(error.msg, 'danger')));

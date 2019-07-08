@@ -3,7 +3,8 @@ import {
   PROFILE_ERROR,
   FETCH_PROFILE,
   CLEAR_PROFILE,
-  CREATE_PROFILE
+  CREATE_PROFILE,
+  UPDATE_PROFILE
 } from '../constants/types';
 
 const initialState = {
@@ -31,6 +32,7 @@ export default (state = initialState, action) => {
         loading: false
       };
     case GET_PROFILE:
+    case UPDATE_PROFILE:
       return {
         ...state,
         profile: action.payload,

@@ -148,7 +148,7 @@ exports.addExperienceToProfile = async (req, res) => {
     // Profile.findByIdAndUpdate({experience: }, {});
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: error.response.data });
   }
 };
 

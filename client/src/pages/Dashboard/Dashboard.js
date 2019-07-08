@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { profileActions } from '../../actions/profileAction';
+import DashboardActions from '../Dashboard/DashboardActions';
+// import UpdateProfile from '../../components/Forms/UpdateProfile';
 import Spinner from '../../containers/Spinner';
 
 const Dashboard = ({
@@ -23,7 +25,10 @@ const Dashboard = ({
         Welcome {user && user.name}
       </p>
       {profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <DashboardActions />
+          {/* <UpdateProfile /> */}
+        </Fragment>
       ) : (
         <Fragment>
           <p>

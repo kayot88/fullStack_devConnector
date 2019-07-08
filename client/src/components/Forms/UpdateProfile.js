@@ -1,11 +1,33 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createProfileUpdate } from '../../actions/profileAction';
+import {
+  createProfileUpdate,
+  profileActions
+} from '../../actions/profileAction';
 import PagesSection from '../../components/PagesSection';
 
-const CreateProfile = ({ createProfileUpdate, history }) => {
+const UpdateProfile = ({ profile: {profile, loading}, createProfileUpdate, profileActions, history }) => {
+  useEffect(() => {
+    profileActions();
+    setFormData({
+      company: !profile.company ? '' : profile.company,
+      website: !profile.website ? '' : profile.website,
+      location: !profile.location ? '' : profile.location,
+      status: !profile.status ? '' : profile.status,
+      bio: !profile.bio ? '' : profile.bio,
+      githubusername: !profile.githubusername ? '' : profile.githubusername,
+      skills: !profile.skills ? '' : profile.skills.join(','),
+      youtube: !profile.social.youtube ? '' : profile.social.youtube,
+      twitter: !profile.social.twitter ? '' : profile.social.twitter,
+      facebook: !profile.social.facebook ? '' : profile.social.facebook,
+      linkedin: !profile.social.linkedin ? '' : profile.social.linkedin,
+      instagram: !profile.social.instagram ? '' : profile.social.instagram
+    });
+/*eslint-disable */
+  }, []);
+/*eslint-enable */ 
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -40,15 +62,14 @@ const CreateProfile = ({ createProfileUpdate, history }) => {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    createProfileUpdate(formData, history);
+    createProfileUpdate(formData, history, true);
   };
   return (
     <Fragment>
       <PagesSection>
-        <h1 className="large text-primary">Create Your Profile</h1>
+        <h1 className="large text-primary">This Is Your Profile</h1>
         <p className="lead">
-          <i className="fa fa-user" /> Let's get some information to make your
-          profile stand out
+          <i className="fa fa-user" /> There some information about you
         </p>
         <small>* = required field</small>
         <form className="form" onSubmit={e => handleSubmit(e)}>
@@ -162,7 +183,7 @@ const CreateProfile = ({ createProfileUpdate, history }) => {
               onClick={() => toggleSocialInputs(!socialInputs)}
               className="btn btn-primary  mx-2"
             >
-              Add Social Network Links
+              Social Network Links
             </button>
             <span>Optional</span>
           </div>
@@ -247,11 +268,17 @@ const CreateProfile = ({ createProfileUpdate, history }) => {
   );
 };
 
-CreateProfile.propTypes = {
-  createProfileUpdate: PropTypes.func.isRequired
+UpdateProfile.propTypes = {
+  createProfileUpdate: PropTypes.func.isRequired,
+  profileActions: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
 export default connect(
-  null,
-  { createProfileUpdate }
-)(withRouter(CreateProfile));
+  mapStateToProps,
+  { createProfileUpdate, profileActions }
+)(withRouter(UpdateProfile));

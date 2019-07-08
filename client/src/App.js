@@ -10,7 +10,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoute from './containers/PrivateRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
-import CreateProfile from './pages/CreateProfile/CreateProfile';
+import CreateProfile from './components/Forms/CreateProfile';
+import UpdateProfile from './components/Forms/UpdateProfile';
+import AddExperence from './components/Forms/AddExperence';
+import AddEducation from './components/Forms/AddEducation';
 import Alert from './containers/Alert';
 import './App.css';
 import store from './store';
@@ -32,15 +35,26 @@ const App = () => {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
-                <PrivateRoute
-                  exact
-                  path="/dashboard"
-                  component={Dashboard}
-                />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute
                   exact
                   path="/create-profile"
                   component={CreateProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/edit-profile"
+                  component={UpdateProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/add-experience"
+                  component={AddExperence}
+                />
+                <PrivateRoute
+                  exact
+                  path="/add-education"
+                  component={AddEducation}
                 />
               </Switch>
             </PagesSection>
