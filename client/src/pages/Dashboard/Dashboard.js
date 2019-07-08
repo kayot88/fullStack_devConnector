@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { profileActions } from '../../actions/profileAction';
 import DashboardActions from '../Dashboard/DashboardActions';
-// import UpdateProfile from '../../components/Forms/UpdateProfile';
+import Experience from '../Dashboard/Experience';
+import Education from '../Dashboard/Education';
 import Spinner from '../../containers/Spinner';
 
 const Dashboard = ({
@@ -27,7 +28,8 @@ const Dashboard = ({
       {profile !== null ? (
         <Fragment>
           <DashboardActions />
-          {/* <UpdateProfile /> */}
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
         </Fragment>
       ) : (
         <Fragment>
@@ -45,7 +47,6 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
   profileActions: PropTypes.func.isRequired,
-  // profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
 
