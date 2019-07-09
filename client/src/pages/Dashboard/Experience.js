@@ -1,29 +1,42 @@
 import React,{Fragment} from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 import Moment from 'react-moment';
-
-const Experience = ({experience}) => {
-  const experiences = experience.map((exp)=> {
-  return (
-    <tr key={exp._id}>
-      <td>{exp.company}</td>
-      <td className="hide-sm">{exp.title}</td>
-      <td>
-        <Moment format="YYYY/MM/DD">{exp.from}</Moment>-{' '}
-        {exp.to === null ? (
-          ' Now'
-        ) : (
-          <Moment format="YYYY/MM/DD">{exp.to}</Moment>
-        )}
-      </td>
-      <td><button className='btn btn-danger'>Delete</button></td>
-    </tr>
-  );
+import { deleteExperience } from '../../actions/profileAction';
+const Experience = ({ experience, deleteExperience, id, history }) => {
+  const handleDelete = (id, history) => {
+    // e.preventDefault();
+    deleteExperience(id, history);
+  };
+  const experiences = experience.map(exp => {
+    return (
+      <tr key={exp._id}>
+        <td>{exp.company}</td>
+        <td className="hide-sm">{exp.title}</td>
+        <td>
+          <Moment format="YYYY/MM/DD">{exp.from}</Moment>-{' '}
+          {exp.to === null ? (
+            ' Now'
+          ) : (
+            <Moment format="YYYY/MM/DD">{exp.to}</Moment>
+          )}
+        </td>
+        <td>
+          <button
+            onClick={() => handleDelete(exp._id, history)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    );
   });
   return (
     <Fragment>
       <h2 className="my-2">Experience Credentials</h2>
-      <table className='table'>
+      <table className="table">
         <thead>
           <tr>
             <th>Company</th>
@@ -38,7 +51,8 @@ const Experience = ({experience}) => {
 };
 
 Experience.propTypes = {
-  experience: PropTypes.array.isRequired
+  experience: PropTypes.array.isRequired,
+  deleteExperience: PropTypes.func.isRequired
 };
 
-export default Experience;
+export default connect(null, {deleteExperience})(withRouter(Experience));

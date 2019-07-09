@@ -3,6 +3,7 @@ const request = require('request');
 
 const Profile = require('../models/Profile');
 const User = require('../models/User');
+const Posts = require('../models/Posts');
 
 exports.createProfileUpdate = async (req, res) => {
   const errors = validationResult(req);
@@ -110,6 +111,8 @@ exports.getProfilesById = async (req, res) => {
 
 exports.deleteProfileAndUser = async (req, res) => {
   try {
+    //remove user posts
+    await Posts.deleteMany({user: req.user.id})
     // remove user Profile
     await Profile.findOneAndRemove({ user: req.user.id });
     //remove user
@@ -163,7 +166,8 @@ exports.deleteExperience = async (req, res) => {
         return item._id;
       })
       .indexOf(req.params.id);
-
+      console.log(req.params.id);
+    debugger;
     if (expIndex == -1) {
       return res.status(400).json({ msg: 'no experience found' });
     }

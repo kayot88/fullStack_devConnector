@@ -1,8 +1,14 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import Moment from 'react-moment';
+import {deleteEducation} from '../../actions/profileAction';
 
-const Education = ({ education }) => {
+const Education = ({ education, deleteEducation, history }) => {
+  const handleDelete = (id, history) => {
+    deleteEducation(id, history)
+  }
   const educations = education.map(edu => {
     return (
       <tr key={edu._id}>
@@ -17,7 +23,12 @@ const Education = ({ education }) => {
           )}
         </td>
         <td>
-          <button className="btn btn-danger">Delete</button>
+          <button
+            onClick={() => handleDelete(edu._id, history)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     );
@@ -40,7 +51,11 @@ const Education = ({ education }) => {
 };
 
 Education.propTypes = {
-  education: PropTypes.array.isRequired
+  education: PropTypes.array.isRequired,
+  deleteEducation: PropTypes.func.isRequired
 };
 
-export default Education;
+export default connect(
+  null,
+  { deleteEducation }
+)(withRouter(Education));

@@ -4,7 +4,10 @@ import {
   FETCH_PROFILE,
   CLEAR_PROFILE,
   CREATE_PROFILE,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  DELETE_EXPERIENCE,
+  DELETE_EDUCATION,
+  REMOVE_PROFILE
 } from '../constants/types';
 
 const initialState = {
@@ -33,6 +36,8 @@ export default (state = initialState, action) => {
       };
     case GET_PROFILE:
     case UPDATE_PROFILE:
+    case DELETE_EXPERIENCE:
+    case DELETE_EDUCATION:
       return {
         ...state,
         profile: action.payload,

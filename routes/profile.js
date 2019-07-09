@@ -40,7 +40,7 @@ router.get('/', getAllProfiles);
 
 router.get('/user/:user_id', getProfilesById);
 
-router.delete('/', auth, deleteProfileAndUser);
+router.delete('/', auth, deleteProfileAndUser); 
 
 router.put(
   '/experience',

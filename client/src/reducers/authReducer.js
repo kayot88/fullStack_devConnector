@@ -7,7 +7,8 @@ import {
   FETCH_LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  REMOVE_PROFILE
 } from '../constants/types';
 
 
@@ -23,6 +24,7 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGOUT:
+    case REMOVE_PROFILE:
       return {
         ...state,
         isAuthorized: false,
@@ -64,7 +66,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isAuthorized: false,
+        isAuthorized: false
         // errors: action.payload
       };
 
