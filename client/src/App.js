@@ -14,6 +14,8 @@ import CreateProfile from './components/Forms/CreateProfile';
 import UpdateProfile from './components/Forms/UpdateProfile';
 import AddExperence from './components/Forms/AddExperence';
 import AddEducation from './components/Forms/AddEducation';
+import ProfileItem from './containers/Profiles/ProfileItem';
+import Profiles from './containers/Profiles/Profiles';
 import Alert from './containers/Alert';
 import './App.css';
 import store from './store';
@@ -35,6 +37,9 @@ const App = () => {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/profiles" component={Profiles} />
+                <Route exact path="/profile/:id" component={ProfileItem} />
+
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute
                   exact

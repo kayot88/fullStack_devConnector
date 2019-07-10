@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {
   GET_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
   PROFILE_ERROR,
   FETCH_PROFILE,
-  // CREATE_PROFILE,
   CLEAR_PROFILE,
   UPDATE_PROFILE,
   DELETE_EXPERIENCE,
@@ -184,12 +185,70 @@ export const createProfileUpdate = (
     if (!edit) {
       history.push('/dashboard');
     }
+    history.push('/dashboard');
   } catch (error) {
     const { errors } = error.response.data;
     errors.map(error => dispatch(alertActions(error.msg, 'danger')));
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+export const getAllProfiles = () => async dispatch => {
+  dispatch({
+    type: FETCH_PROFILE
+  });
+  try {
+    const res = await axios.get('/api/profile');
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+
+export const getProfileById = userId => async dispatch => {
+  dispatch({
+    type: FETCH_PROFILE
+  });
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+
+export const getRepos = username => async dispatch => {
+  dispatch({
+    type: FETCH_PROFILE
+  });
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
     });
   }
 };

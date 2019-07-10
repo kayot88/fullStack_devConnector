@@ -48,19 +48,24 @@ body {
 .form .social-input i.fa-linkedin {
   color: #0077b5;
 }
+ul {
+  list-style: none;
+}
+/* img {
+  width: 100%;
+} */
+
+.exp-list {
+  margin-right: 25px;
+}
 
 /* a {
   color: var(--primary-color);
   text-decoration: none;
 }
 
-ul {
-  list-style: none;
-}
 
-img {
-  width: 100%;
-}
+
 
 .container {
   max-width: 1100px;

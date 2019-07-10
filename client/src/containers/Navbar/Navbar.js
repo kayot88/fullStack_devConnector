@@ -27,6 +27,15 @@ const Navbar = ({ logoutUser, isAuthorized, loading }) => {
           <StyledListItem>
             <StyledLink
               className="fa fa-user"
+              to="/profiles"
+            > 
+              Developers
+            </StyledLink>
+          </StyledListItem>
+          <StyledListItem></StyledListItem>
+          <StyledListItem>
+            <StyledLink
+              className="fa fa-user"
               to="/dashboard"
             > 
               Dashboard
@@ -54,7 +63,7 @@ const Navbar = ({ logoutUser, isAuthorized, loading }) => {
       </h1>
       <StyledList>
         <StyledListItem>
-          <StyledLink to="/" className="active">
+          <StyledLink className="fa fa-user" to="/profiles">
             Developers
           </StyledLink>
         </StyledListItem>

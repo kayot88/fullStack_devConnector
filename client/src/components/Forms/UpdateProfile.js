@@ -19,11 +19,11 @@ const UpdateProfile = ({ profile: {profile, loading}, createProfileUpdate, profi
       bio: !profile.bio ? '' : profile.bio,
       githubusername: !profile.githubusername ? '' : profile.githubusername,
       skills: !profile.skills ? '' : profile.skills.join(','),
-      youtube: !profile.social.youtube ? '' : profile.social.youtube,
-      twitter: !profile.social.twitter ? '' : profile.social.twitter,
-      facebook: !profile.social.facebook ? '' : profile.social.facebook,
-      linkedin: !profile.social.linkedin ? '' : profile.social.linkedin,
-      instagram: !profile.social.instagram ? '' : profile.social.instagram
+      youtube: !profile.social ? '' : profile.social.youtube,
+      twitter: !profile.social ? '' : profile.social.twitter,
+      facebook: !profile.social ? '' : profile.social.facebook,
+      linkedin: !profile.social ? '' : profile.social.linkedin,
+      instagram: !profile.social ? '' : profile.social.instagram
     });
 /*eslint-disable */
   }, []);
