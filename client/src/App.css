@@ -11,7 +11,32 @@ body {
   background-color: #fff;
   color: #333;
 }
+.repo {
+  border: solid 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+.repoWrapper {
+  /* line-height: 16px; */
+  height: inherit;
+}
+.headRepo {
+  margin: 0;
+  padding: 0;
+}
 
+.repoStats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+.badge {
+  width: 100%;
+  border: solid 1px;
+}
 .form input[type='text'],
 .form input[type='email'],
 .form input[type='password'],
