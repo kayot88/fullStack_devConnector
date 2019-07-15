@@ -4,20 +4,22 @@ const User = require('../models/User');
 const Profile = require('../models/Profile');
 
 exports.addPost = async (req, res) => {
+  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
     const user = await User.findById({ _id: req.user.id }).select('-password');
-    const post = new Posts({
+    const newPost = new Posts({
       text: req.body.text,
       user: user.id,
       name: user.name,
       avatar: user.avatar
     });
-    await post.save();
-    res.status(200).json({ msg: 'The Post is created' });
+    const post = await newPost.save();
+    res.json(post);
+    // res.status(200).json({ msg: 'The Post is created' });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
@@ -119,7 +121,7 @@ exports.unLikePost = async (req, res) => {
         return like.user.toString();
       })
       .indexOf(req.user.id);
-      // console.log(likeIndex);
+    // console.log(likeIndex);
     post.likes.splice(likeIndex, 1);
     await post.save();
     res.json(post.likes);
@@ -181,7 +183,7 @@ exports.deleteComment = async (req, res) => {
     res.json(post.comments);
   } catch (error) {
     console.error(error.message);
-        // res.json(post.comments);
+    // res.json(post.comments);
 
     res.status(500).send('Server error');
   }

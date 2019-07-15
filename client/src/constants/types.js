@@ -25,3 +25,4 @@ export const GET_POSTS = 'GET_POSTS';
 export const POSTS_ERROR = 'POSTS_ERROR';
 export const POST_UPDATE = 'POST_UPDATE';
 export const POST_DELETE = 'POST_DELETE';
+export const ADD_POST = 'ADD_POST';

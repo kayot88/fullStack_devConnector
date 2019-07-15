@@ -13,7 +13,8 @@ import {
   GET_POSTS,
   POSTS_ERROR,
   POST_UPDATE,
-  POST_DELETE
+  POST_DELETE,
+  ADD_POST
 } from '../constants/types';
 import { setHeaderToken } from '../utils/setHeaderToken';
 import alertActions from '../actions/alertActions';
@@ -43,6 +44,37 @@ export const addExperience = (formData, history) => async dispatch => {
     errors.map(error => dispatch(alertActions(error.msg, 'danger')));
     dispatch({
       type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+export const addPost = (formData) => async dispatch => {
+  // dispatch({
+  //   type: FETCH_PROFILE
+  // });
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.post('/api/posts', formData, config);
+    console.log(res.data);
+    dispatch({
+      type: ADD_POST,
+      payload: res.data
+    });
+    // console.log(res.data);
+    if (res.data) {
+      dispatch(alertActions('post added', 'success'));
+      // history.push('/dashboard');
+    }
+  } catch (error) {
+    console.log(error);
+    // const { errors } = error.response.data;
+    // errors.map(error => dispatch(alertActions(error.msg, 'danger')));
+    dispatch({
+      type: POSTS_ERROR,
       payload: { msg: error.response.data }
     });
   }
