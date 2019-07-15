@@ -4,6 +4,16 @@
   padding: 0;
 }
 
+.postItem {
+  /* vertical-align: middle; */
+  justify-content: center;
+}
+.hPost {
+  align-self: center;
+}
+a .image {
+  border-radius: 50%;
+}
 body {
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;

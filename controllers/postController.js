@@ -13,6 +13,7 @@ exports.addPost = async (req, res) => {
     const post = new Posts({
       text: req.body.text,
       user: user.id,
+      name: user.name,
       avatar: user.avatar
     });
     await post.save();
@@ -81,6 +82,7 @@ exports.deletePost = async (req, res) => {
 exports.likePost = async (req, res) => {
   try {
     const post = await Posts.findById(req.params.id);
+    // console.log(post);
     //check if post liked
     if (
       post.likes.filter(like => like.user.toString() === req.user.id).length > 0
@@ -104,10 +106,8 @@ exports.likePost = async (req, res) => {
 exports.unLikePost = async (req, res) => {
   try {
     const post = await Posts.findById(req.params.id);
-    console.log(post.likes);
-    if (post.likes.filter(like => like.user.toString() !== req.user.id)) {
-      return res.status(400).json({ msg: 'you has not like post yet' });
-    }
+    // console.log(post.likes);
+    console.log(req.user.id);
     if (
       post.likes.filter(like => like.user.toString() === req.user.id).length ===
       0
@@ -119,6 +119,7 @@ exports.unLikePost = async (req, res) => {
         return like.user.toString();
       })
       .indexOf(req.user.id);
+      // console.log(likeIndex);
     post.likes.splice(likeIndex, 1);
     await post.save();
     res.json(post.likes);

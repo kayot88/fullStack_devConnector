@@ -9,7 +9,11 @@ import {
   UPDATE_PROFILE,
   DELETE_EXPERIENCE,
   DELETE_EDUCATION,
-  REMOVE_PROFILE
+  REMOVE_PROFILE,
+  GET_POSTS,
+  POSTS_ERROR,
+  POST_UPDATE,
+  POST_DELETE
 } from '../constants/types';
 import { setHeaderToken } from '../utils/setHeaderToken';
 import alertActions from '../actions/alertActions';
@@ -134,6 +138,32 @@ export const deleteProfile = () => async dispatch => {
     }
   }
 };
+export const deletePost = postId => async dispatch => {
+  if (window.confirm('Are you sure? This can NOT be undone!')) {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setHeaderToken(token);
+      }
+      await axios.delete(`/api/posts/${postId}`);
+
+      dispatch(alertActions('Post deleted', 'success'));
+      dispatch({
+        type: POST_DELETE,
+        payload: postId
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: POSTS_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status
+        }
+      });
+    }
+  }
+};
 
 export const profileActions = () => async dispatch => {
   dispatch({
@@ -156,6 +186,57 @@ export const profileActions = () => async dispatch => {
     console.error(error.message);
     dispatch({
       type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+export const postLikeActions = postId => async dispatch => {
+  dispatch({
+    type: FETCH_PROFILE
+  });
+
+  const token = localStorage.getItem('token');
+  if (token) {
+    setHeaderToken(token);
+  }
+
+  try {
+    const res = await axios.put(`/api/posts/like/${postId}`);
+    // console.log(res);
+    dispatch({
+      type: POST_UPDATE,
+      payload: { postId, likes: res.data }
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: POSTS_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+
+export const postDislikeActions = postId => async dispatch => {
+  dispatch({
+    type: FETCH_PROFILE
+  });
+
+  const token = localStorage.getItem('token');
+  if (token) {
+    setHeaderToken(token);
+  }
+
+  try {
+    const res = await axios.put(`/api/posts/unlike/${postId}`);
+    // console.log(res);
+    dispatch({
+      type: POST_UPDATE,
+      payload: { postId, likes: res.data }
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: POSTS_ERROR,
       payload: { msg: error.response.data }
     });
   }
@@ -235,9 +316,6 @@ export const getProfileById = userId => async dispatch => {
 };
 
 export const getRepos = username => async dispatch => {
-  // dispatch({
-  //   type: FETCH_PROFILE
-  // });
   try {
     const res = await axios.get(`/api/profile/github/${username}`);
     dispatch({
@@ -248,6 +326,22 @@ export const getRepos = username => async dispatch => {
     console.error(error.message);
     dispatch({
       type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+
+export const getPosts = username => async dispatch => {
+  try {
+    const res = await axios.get('/api/posts/');
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: POSTS_ERROR,
       payload: { msg: error.response.data }
     });
   }

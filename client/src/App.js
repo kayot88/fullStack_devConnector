@@ -16,6 +16,7 @@ import AddExperence from './components/Forms/AddExperence';
 import AddEducation from './components/Forms/AddEducation';
 import ProfileItem from './containers/Profiles/ProfileItem';
 import Profiles from './containers/Profiles/Profiles';
+import PostList from './containers/Posts/PostList';
 import Alert from './containers/Alert';
 import './App.css';
 import store from './store';
@@ -45,6 +46,11 @@ const App = () => {
                   exact
                   path="/create-profile"
                   component={CreateProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/posts"
+                  component={PostList}
                 />
                 <PrivateRoute
                   exact

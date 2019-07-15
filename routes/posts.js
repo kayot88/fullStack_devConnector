@@ -37,7 +37,6 @@ router.get('/:id', auth, getPostById);
 
 //delete post
 router.delete('/:id', auth, deletePost);
-module.exports = router;
 
 //like post
 router.put('/like/:id', auth, likePost);
@@ -52,12 +51,14 @@ router.put(
     auth,
     [
       check('text', 'text is required')
-        .not()
-        .isEmpty()
+      .not()
+      .isEmpty()
     ]
   ],
   addComment
-);
-
-// remove comment
-router.delete('/comments/:id/:comment_id', auth, deleteComment);
+  );
+  
+  // remove comment
+  router.delete('/comments/:id/:comment_id', auth, deleteComment);
+  
+  module.exports = router;

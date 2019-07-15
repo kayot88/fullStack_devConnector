@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { loginAction } from '../actions/authAction';
 
 const Login = ({ loginAction, loading, isAuthorized }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData ] = useState({
     email: '',
     password: ''
   });
@@ -30,7 +30,7 @@ const Login = ({ loginAction, loading, isAuthorized }) => {
     <Fragment>
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
-        <i className="fa fa-user" /> Sign Into Your Account
+        <i className="fa fa-user " /> Sign Into Your Account
       </p>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
