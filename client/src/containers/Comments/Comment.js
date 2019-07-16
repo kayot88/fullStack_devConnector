@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addComment, getComments } from '../../actions/profileAction';
+import {Link} from 'react-router-dom';
 import Moment from 'react-moment'
 import Spinner from '../Spinner';
 
@@ -55,6 +56,9 @@ const Comment = ({ addComment, getComments, post, loading, match }) => {
                 className="btn btn-dark my-1"
                 value="Submit"
               />
+              <Link type="button" className="btn btn-dark my-1" to="/posts">
+                Back to posts
+              </Link>
             </form>
           </div>
         </div>
@@ -72,9 +76,7 @@ const Comment = ({ addComment, getComments, post, loading, match }) => {
                     style={{ hight: '40px', width: '40px' }}
                   />
                   <div className="mx-2">{comment.text}</div>
-                  <Moment format="YYYY/MM/DD">
-                    {comment.date}
-                  </Moment>
+                  <Moment format="YYYY/MM/DD">{comment.date}</Moment>
                 </div>
               </div>
             );
