@@ -16,6 +16,7 @@ import AddExperence from './components/Forms/AddExperence';
 import AddEducation from './components/Forms/AddEducation';
 import ProfileItem from './containers/Profiles/ProfileItem';
 import Profiles from './containers/Profiles/Profiles';
+import Comment from './containers/Comments/Comment';
 import PostList from './containers/Posts/PostList';
 import Alert from './containers/Alert';
 import './App.css';
@@ -40,6 +41,7 @@ const App = () => {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/profile/:id" component={ProfileItem} />
+                <Route exact path="/post/:id" component={Comment} />
 
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute

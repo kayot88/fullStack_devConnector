@@ -26,3 +26,6 @@ export const POSTS_ERROR = 'POSTS_ERROR';
 export const POST_UPDATE = 'POST_UPDATE';
 export const POST_DELETE = 'POST_DELETE';
 export const ADD_POST = 'ADD_POST';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const GET_COMMENTS = 'GET_COMMENTS ';
+export const DELETE_COMMENT = 'DELETE_COMMENT';

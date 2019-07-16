@@ -58,6 +58,23 @@ exports.getPostById = async (req, res) => {
     res.status(500).send('server error');
   }
 };
+
+exports.getCommentsById = async (req, res) => {
+  try {
+    const post = await Posts.findById(req.body.postId);
+    console.log(post);
+    if (!post) {
+      return res.status(400).json({ msg: 'posts not found' });
+    }
+    res.json(post.comments);
+  } catch (error) {
+    console.error(error.message);
+    if (error.kind === 'ObjectId') {
+      return res.status(400).json({ msg: 'posts not found' });
+    }
+    res.status(500).send('server error');
+  }
+};
 exports.deletePost = async (req, res) => {
   try {
     const user = await User.findById({ _id: req.user.id });
@@ -140,8 +157,10 @@ exports.addComment = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-    const post = await Posts.findById(req.params.id);
+    const post = await Posts.findById(req.body.postId);
+    // console.log(post);
     const user = await User.findById({ _id: req.user.id }).select('-password');
+    // console.log(user);
     const { text } = req.body;
     const newComment = {
       text,

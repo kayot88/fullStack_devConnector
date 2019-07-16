@@ -3,12 +3,15 @@ import {
   POSTS_ERROR,
   POST_UPDATE,
   POST_DELETE,
-  ADD_POST
+  ADD_POST,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  GET_COMMENTS
 } from '../constants/types';
 
 const initialState = {
   posts: [],
-  post: null,
+  post: {},
   error: {},
   loading: true
 };
@@ -30,6 +33,19 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: state.posts.filter(post => post._id !== action.payload),
+        loading: false
+      };
+    case ADD_COMMENT:
+      // console.log(action.payload);
+      return {
+        ...state,
+        post: { ...state.post, comments: action.payload },
+        loading: false
+      };
+    case GET_COMMENTS:
+      return {
+        ...state,
+        post: { ...state.post, comments: action.payload },
         loading: false
       };
     case ADD_POST:

@@ -14,7 +14,10 @@ import {
   POSTS_ERROR,
   POST_UPDATE,
   POST_DELETE,
-  ADD_POST
+  ADD_POST,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  GET_COMMENTS
 } from '../constants/types';
 import { setHeaderToken } from '../utils/setHeaderToken';
 import alertActions from '../actions/alertActions';
@@ -48,7 +51,7 @@ export const addExperience = (formData, history) => async dispatch => {
     });
   }
 };
-export const addPost = (formData) => async dispatch => {
+export const addPost = formData => async dispatch => {
   // dispatch({
   //   type: FETCH_PROFILE
   // });
@@ -77,6 +80,35 @@ export const addPost = (formData) => async dispatch => {
       type: POSTS_ERROR,
       payload: { msg: error.response.data }
     });
+  }
+};
+export const addComment = (text, postId) => async dispatch => {
+
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.put(`/api/posts/${postId}/comments`, text, config);
+    // console.log(res.data);
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data
+    });
+    // console.log(res.data);
+    if (res.data) {
+      dispatch(alertActions('comment added', 'success'));
+      // history.push('/dashboard');
+    }
+  } catch (error) {
+    console.log(error);
+    // const { errors } = error.response.data;
+    // errors.map(error => dispatch(alertActions(error.msg, 'danger')));
+    // dispatch({
+    //   type: POSTS_ERROR,
+    //   payload: { msg: error.response.data }
+    // });
   }
 };
 export const addEducation = (formData, history) => async dispatch => {
@@ -358,6 +390,26 @@ export const getRepos = username => async dispatch => {
     console.error(error.message);
     dispatch({
       type: PROFILE_ERROR,
+      payload: { msg: error.response.data }
+    });
+  }
+};
+export const getComments = postId => async dispatch => {
+  try {
+     const token = localStorage.getItem('token');
+     if (token) {
+       setHeaderToken(token);
+     }
+    const res = await axios.get(`/api/posts/${postId}`);
+    console.log(res.data.comments);
+    dispatch({
+      type: GET_COMMENTS,
+      payload: res.data.comments
+    });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({
+      type: POSTS_ERROR,
       payload: { msg: error.response.data }
     });
   }
