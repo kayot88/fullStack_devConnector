@@ -1,21 +1,32 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addComment, getComments } from '../../actions/profileAction';
-import {Link} from 'react-router-dom';
-import Moment from 'react-moment'
+import {
+  addComment,
+  getComments,
+  deleteComment
+} from '../../actions/profileAction';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 import Spinner from '../Spinner';
 
-const Comment = ({ addComment, getComments, post, loading, match }) => {
+const Comment = ({
+  addComment,
+  getComments,
+  deleteComment, 
+  auth,
+  post,
+  loading,
+  match
+}) => {
   useEffect(() => {
     const postId = match.params.id;
     getComments(postId);
-    // setText(res)
     /*eslint-disable*/
   }, [getComments]);
   /*eslint-enable*/
 
-  console.log(loading);
+  // console.log(loading);
   const postId = match.params.id;
   const [text, setText] = useState('');
   const handleChange = e => {
@@ -46,15 +57,15 @@ const Comment = ({ addComment, getComments, post, loading, match }) => {
                 name="text"
                 cols="30"
                 rows="5"
-                placeholder="Create a post"
+                placeholder="Create a comment"
                 onChange={e => handleChange(e)}
                 value={text}
                 required
               />
               <input
                 type="submit"
-                className="btn btn-dark my-1"
-                value="Submit"
+                className="btn btn-success my-1"
+                value="Send"
               />
               <Link type="button" className="btn btn-dark my-1" to="/posts">
                 Back to posts
@@ -72,12 +83,27 @@ const Comment = ({ addComment, getComments, post, loading, match }) => {
               >
                 <div className="d-flex ">
                   <img
+                    alt="avatar"
                     src={comment.avatar}
                     style={{ hight: '40px', width: '40px' }}
                   />
                   <div className="mx-2">{comment.text}</div>
-                  <Moment format="YYYY/MM/DD">{comment.date}</Moment>
+                  <Moment format="YYYY/MM/DD">
+                    {comment.date}
+                  </Moment>
                 </div>
+                {comment.name === auth.user.id ? (
+                  <button
+                    className="btn btn-danger"
+                    onClick={e =>
+                      deleteComment(postId, comment._id)
+                    }
+                  >
+                    <i className="fa fa-trash" />
+                  </button>
+                ) : (
+                  ''
+                )}
               </div>
             );
           })
@@ -89,14 +115,16 @@ const Comment = ({ addComment, getComments, post, loading, match }) => {
 
 Comment.propTypes = {
   addComment: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   post: state.post,
-  loading: state.post.loading
+  loading: state.post.loading,
+  auth: state.auth
 });
 export default connect(
   mapStateToProps,
-  { addComment, getComments }
+  { addComment, getComments, deleteComment }
 )(Comment);

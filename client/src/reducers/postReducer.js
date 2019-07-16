@@ -36,6 +36,7 @@ const postReducer = (state = initialState, action) => {
         loading: false
       };
     case ADD_COMMENT:
+    case DELETE_COMMENT:
       // console.log(action.payload);
       return {
         ...state,

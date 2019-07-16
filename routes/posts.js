@@ -62,6 +62,6 @@ router.put(
   );
   
   // remove comment
-  router.delete('/comments/:id/:comment_id', auth, deleteComment);
+  router.delete('/:id/:comment_id', auth, deleteComment);
   
   module.exports = router;

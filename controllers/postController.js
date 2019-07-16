@@ -177,8 +177,10 @@ exports.addComment = async (req, res) => {
 };
 
 exports.deleteComment = async (req, res) => {
+  console.log(req.params);
   try {
     const post = await Posts.findById(req.params.id);
+    console.log(post);
     const comment = post.comments.find(
       comment => comment.id === req.params.comment_id
     );

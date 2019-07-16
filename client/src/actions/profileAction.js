@@ -228,6 +228,32 @@ export const deletePost = postId => async dispatch => {
     }
   }
 };
+export const deleteComment = (postId, commentId) => async dispatch => {
+  console.log(postId);
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setHeaderToken(token);
+      }
+      const res = await axios.delete(`/api/posts/${postId}/${commentId}`);
+
+      dispatch(alertActions('Comment deleted', 'success'));
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: res.data
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: POSTS_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status
+        }
+      });
+    }
+  
+};
 
 export const profileActions = () => async dispatch => {
   dispatch({
