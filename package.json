@@ -29,7 +29,7 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
+    "concurrently": "^6.0.1",
     "nodemon": "^1.19.1"
   },
   "proxy": "http://localhost:5000"
